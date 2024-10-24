@@ -9,7 +9,7 @@ from channels.layers import get_channel_layer
 def index(response):
     return HttpResponse("<h1>hello there </h1>")
 def home(response):
-    return render(response,"main/home.html",{"name":"home"})
+    return render(response,"main/home.html",{})
 
 def heartdisease(response):
     return render(response,"main/classification/heartdisease.html",{})
