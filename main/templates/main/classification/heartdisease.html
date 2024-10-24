@@ -1,0 +1,147 @@
+{% extends 'main/base.html' %}
+{% block title %}Create a new List{% endblock %}
+{% block content %}
+<h3>Heart Disease Prediction Model</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Three Sections Page</title>
+    <style>
+         @media (max-width:480px) {  
+            header {  
+            padding:15px;  
+            }  
+        }
+        @media (max-width:768px) {  
+        .container {  
+        width:90%;  
+        }  
+        }
+        .slider {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-2">
+        <div class="row">
+            <!-- Section 1: 7 Select Sliders -->
+            <div class="col" style="background-color: white; border-radius: 10px; margin-right: 10px; margin-top: 10px;">
+                <h2>Select Parameters</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="slider1" style="margin-right:80%;">Slider 1</label><span id="slider1Value">50</span>
+                        <input type="range" class="slider" id="slider1" min="0" max="100" oninput="updateValue('slider1')">
+                    </div>
+                    <div class="form-group">
+                        <label for="slider2" style="margin-right:80%;">Slider 2</label><span id="slider2Value">50</span>
+                        <input type="range" class="slider" id="slider2" min="0" max="100" oninput="updateValue('slider2')">
+                    </div>
+                    <div class="form-group">
+                        <label for="slider3" style="margin-right:80%;">Slider 3</label><span id="slider3Value">50</span>
+                        <input type="range" class="slider" id="slider3" min="0" max="100" oninput="updateValue('slider3')">
+                    </div>
+                    <div class="form-group">
+                        <label for="slider4" style="margin-right:80%;">Slider 4</label><span id="slider4Value">50</span>
+                        <input type="range" class="slider" id="slider4" min="0" max="100" oninput="updateValue('slider4')">
+                    </div>
+                    <div class="form-group">
+                        <label for="slider5" style="margin-right:80%;">Slider 5</label><span id="slider5Value">50</span>
+                        <input type="range" class="slider" id="slider5" min="0" max="100" oninput="updateValue('slider5')">
+                    </div>
+                    <div class="form-group">
+                        <label for="slider6" style="margin-right:80%;">Slider 6</label><span id="slider6Value">50</span>
+                        <input type="range" class="slider" id="slider6" min="0" max="100" oninput="updateValue('slider6')">
+                    </div>
+                    <div class="form-group">
+                        <label for="slider7" style="margin-right:80%;">Slider 7</label><span id="slider7Value">50</span>
+                        <input type="range" class="slider" id="slider7" min="0" max="100" oninput="updateValue('slider7')">
+                    </div>
+                    <button type="submit" name="save" class="btn btn-success" style="margin-bottom: 10px; float: inline-end;">Predict Results</button>
+                </form>
+            </div>
+            <div class="col" style="background-color: white; border-radius: 10px; margin-right: 10px; margin-top: 10px;">
+                <div class="col">
+                    <h2>Result</h2>
+                    <p id="result">Results will be displayed here...</p>
+                </div>
+                <div class="col">
+                    <h2>asasdsa</h2>
+                    <img id="plot" src="" alt="live plot" style="width: 90%;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ws;
+        var sliders = [];
+        function connectWebSocket() {
+            var loc = window.location;
+            var wsStart = (loc.protocol === "https:") ? "wss://" : "ws://";
+            var endpoint = wsStart + loc.host + "/ws/plot_update/";
+
+            ws = new WebSocket(endpoint);
+            console.log(ws);
+            ws.onopen = function() {
+                console.log('WebSocket connection opened.');
+                updateChart(); // Initial chart update
+            };
+
+            ws.onmessage = function(event) {
+                var data = JSON.parse(event.data);
+                var plot = document.getElementById('plot');
+                if (plot) {
+                    plot.src = 'data:image/png;base64,' + data.plot;
+                } else {
+                    console.log("Element 'plot' not found");
+                }
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket connection closed. Reconnecting...');
+                setTimeout(connectWebSocket, 1000); // Reconnect after 1 second
+            };
+
+            ws.onerror = function(error) {
+                console.log('WebSocket error: ' + error.message);
+                ws.close();
+            };
+        }
+
+        connectWebSocket();
+        function updateValue(sliderId) {
+            var slider = document.getElementById(sliderId);
+            var valueSpan = document.getElementById(sliderId + 'Value');
+            valueSpan.innerHTML = slider.value;
+            updateChart();
+        }
+        function updateChart() {
+            sliders.length=0;
+            for (var i = 1; i <= 7; i++) {
+                sliders.push(Number(document.getElementById('slider' + i).value));
+            }
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({
+                    'x': [1, 2, 3, 4, 5, 6, 7],
+                    'y': sliders
+                }));
+            } else {
+                console.log("WebSocket is not open: ", ws.readyState);  
+            }
+        }
+       
+        
+        // Function to update slider values
+        
+        
+    </script>
+</body>
+</html>
+{% endblock %}

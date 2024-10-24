@@ -1,0 +1,1 @@
+web gunicorn mlwiz.wsgi:application --log-file -

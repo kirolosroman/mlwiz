@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Plot Update</title>
+</head>
+<body>
+    <h1>Live Plot Update</h1>
+    <img id="plot" src="" alt="Live Plot" />
+
+    <script>
+        var ws = new WebSocket('ws://' + window.location.host + '/ws/plot_update/');
+        ws.onopen = function() {
+        console.log('WebSocket connection opened.');
+        };
+
+        ws.onmessage = function(event) {
+            var data = JSON.parse(event.data);
+            var plot = document.getElementById('plot');
+            plot.src = 'data:image/png;base64,' + data.plot;
+        };
+
+        ws.onclose = function() {
+        console.log('WebSocket connection closed. Reconnecting...');
+        setTimeout(connectWebSocket, 1000); // Reconnect after 1 second
+        };
+
+        // Simulate sending new data for the plot
+        setInterval(function() {
+            ws.send(JSON.stringify({
+                'x': [1, 2, 3, 4, 5],
+                'y': [5, 4, 3, 2, 1]
+            }));
+        }, 5000); // Update every 5 seconds
+        ws.onerror = function(error) {
+       console.error('WebSocket Error:', error);
+       ws.close();
+        };
+       // Handle the error, e.g., display a message to the user
+       // You might want to attempt to reconnect here, but be careful to avoid infinite loops.
+    </script>
+</body>
+</html>
+
+
+
+
+var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange','black'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: sliders,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        
