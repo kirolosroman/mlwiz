@@ -12,12 +12,9 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/mlwiz/wsgi.py"
+      "dest": "mlwiz/wsgi.py"
     }
+    
   ]
 }
