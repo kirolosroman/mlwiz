@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "mlwiz/wsgi.py",
+      "src": "mlwiz/asgi.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
@@ -17,7 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "mlwiz/wsgi.py"
+      "dest": "mlwiz/asgi.py"
     }
     
   ]
