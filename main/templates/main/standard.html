@@ -29,56 +29,56 @@
             <div class="col" style="background-color: white; border-radius: 10px; margin-right: 10px; margin-top: 10px;">
                 <h2  style="padding-top:10px ;flex: auto;">Select Parameters</h2>
                 <form>
-                    <div class="row d-flex align-items-center" style="padding-top: 10px; margin-left: 10px; ">
-                        <div class="col-1"><label for="slider1" style="margin-right:20px;">Age</label></div>
-                        <div class="col-9"><input type="range" class="slider" id="slider1" min="18" max="100" oninput="updateValue('slider1')" style="margin-right: 20px;"></div>
+                    <div class="form-group d-flex align-items-center" style="padding-top: 10px;">
+                        <label for="slider1" style="margin-right:20px;">Age</label>
+                        <input type="range" class="slider" id="slider1" min="18" max="100" oninput="updateValue('slider1')" style="margin-right: 20px;">
                         <span id="slider1Value">36</span>
                     </div>
-                    <div class="row d-flex align-items-center" style="margin-left: 10px; ">  
-                        <div class="col-1"><label for="slider2" style="margin-right:20px;">Sex</label></div>       
-                        <div class="col-9"><select class="form-select" id="slider2" aria-label="Default select example" onchange="updateValue('slider2')"
+                    <div class="form-group d-flex align-items-center">  
+                        <label for="slider2" style="margin-right:20px;">Sex</label>          
+                        <select class="form-select" id="slider2" aria-label="Default select example" onchange="updateValue('slider2')"
                                 style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; ">
                             <option selected value="0">0</option>
                             <option value="1">1</option>
-                        </select></div>
+                        </select>
                         <span id="slider2Value"></span>  
                     </div>
-                    <div class="row d-flex align-items-center" style="margin-left: 10px; ">    
-                        <div class="col-1"><label for="slider3" style="margin-right:20px;">cp</label> </div>         
-                        <div class="col-9"><select class="form-select" id="slider3" aria-label="Default select example" onchange="updateValue('slider3')" 
+                    <div  class="form-group d-flex align-items-center">    
+                        <div><label for="slider3" style="margin-right:20px;">cp</label> </div>         
+                        <select class="form-select" id="slider3" aria-label="Default select example" onchange="updateValue('slider3')" 
                                 style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
                             <option selected value="1">1</option>
                             <option value="2">2</option>
                             <option value="50">50</option>
-                        </select></div>
+                        </select>
                         <span id="slider3Value"></span> 
                     </div>    
-                    <div class="row d-flex align-items-center" style="margin-left: 10px; ">
-                        <div class="col-1"><label for="slider4" style="margin-right:20px;">trestbps</label></div>
-                        <div class="col-9"><input type="range" class="slider" id="slider4" min="90" max="200" oninput="updateValue('slider4')" style="margin-right: 20px;"></div>
+                    <div class="form-group d-flex align-items-center" style="padding-top: 10px;">
+                        <label for="slider4" style="margin-right:20px;">trestbps</label>
+                        <input type="range" class="slider" id="slider4" min="90" max="200" oninput="updateValue('slider4')" style="margin-right: 20px;">
                         <span id="slider4Value">110</span>
                     </div> 
-                    <div class="row d-flex align-items-center" style="margin-left: 10px; ">
-                        <div class="col-1"><label for="slider5" style="margin-right:20px;">chol</label></div>
-                        <div class="col-9"><input type="range" class="slider" id="slider5" min="172.0" max="231.0" oninput="updateValue('slider5')" style="margin-right: 20px;"></div>
+                    <div class="form-group d-flex align-items-center" style="padding-top: 10px;">
+                        <label for="slider5" style="margin-right:20px;">chol</label>
+                        <input type="range" class="slider" id="slider5" min="172.0" max="231.0" oninput="updateValue('slider5')" style="margin-right: 20px;">
                         <span id="slider5Value">201.0</span>
                     </div> 
-                    <div  class="row d-flex align-items-center" style="margin-left: 10px; ">    
-                        <div class="col-1"><label for="slider6" style="margin-right:20px;">fbs</label> </div>         
-                        <div class="col-9"><select class="form-select" id="slider6" aria-label="Default select example" onchange="updateValue('slider6')" 
+                    <div  class="form-group d-flex align-items-center">    
+                        <div><label for="slider6" style="margin-right:20px;">fbs</label> </div>         
+                        <select class="form-select" id="slider6" aria-label="Default select example" onchange="updateValue('slider6')" 
                                 style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
                             <option selected value="0">0</option>
                             <option value="50">50</option>
-                        </select></div>
+                        </select>
                         <span id="slider6Value">0</span> 
                     </div>    
-                    <div  class="row d-flex align-items-center" style="margin-left: 10px; ">    
-                        <div class="col-1"><label for="slider7" style="margin-right:20px;">restecg</label> </div>         
-                        <div class="col-9"><select class="form-select" id="slider7" aria-label="Default select example" onchange="updateValue('slider7')" 
+                    <div  class="form-group d-flex align-items-center">    
+                        <div><label for="slider7" style="margin-right:20px;">restecg</label> </div>         
+                        <select class="form-select" id="slider7" aria-label="Default select example" onchange="updateValue('slider7')" 
                                 style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
                             <option selected value="0">0</option>
                             <option value="50">50</option>
-                        </select></div>
+                        </select>
                         <span id="slider7Value">0</span> 
                     </div>    
                     <button type="submit" name="save" class="btn btn-success" style="margin-bottom: 10px; float: inline-end;">Predict Results</button>
