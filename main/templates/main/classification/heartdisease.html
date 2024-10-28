@@ -14,12 +14,19 @@
             header {  
             padding:15px;  
             }  
+            .plot {
+            width: 100%;
+            height: 300px;
+            }
         }
-      
+        @media (min-width: 768px) {
+        .plot {
+            width: 80%;
+            }
+        }
         .slider {
             width: 100%;
-        }
-        
+        }    
     </style>
 </head>
 <body>
@@ -49,7 +56,7 @@
                                 style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
                             <option selected value="1">1</option>
                             <option value="2">2</option>
-                            <option value="50">50</option>
+                            <option value="1">1</option>
                         </select></div>
                         <span id="slider3Value"></span> 
                     </div>    
@@ -60,7 +67,7 @@
                     </div> 
                     <div class="row d-flex align-items-center" style="margin-left: 10px; ">
                         <div class="col-1"><label for="slider5" style="margin-right:20px;">chol</label></div>
-                        <div class="col-9"><input type="range" class="slider" id="slider5" min="172.0" max="231.0" oninput="updateValue('slider5')" style="margin-right: 20px;"></div>
+                        <div class="col-9"><input type="range" class="slider" id="slider5" min="172.0" max="231.0" step="0.1" oninput="updateValue('slider5')" style="margin-right: 20px;"></div>
                         <span id="slider5Value">201.0</span>
                     </div> 
                     <div  class="row d-flex align-items-center" style="margin-left: 10px; ">    
@@ -68,7 +75,7 @@
                         <div class="col-9"><select class="form-select" id="slider6" aria-label="Default select example" onchange="updateValue('slider6')" 
                                 style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
                             <option selected value="0">0</option>
-                            <option value="50">50</option>
+                            <option value="1">1</option>
                         </select></div>
                         <span id="slider6Value">0</span> 
                     </div>    
@@ -77,21 +84,92 @@
                         <div class="col-9"><select class="form-select" id="slider7" aria-label="Default select example" onchange="updateValue('slider7')" 
                                 style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
                             <option selected value="0">0</option>
-                            <option value="50">50</option>
+                            <option value="1">1</option>
                         </select></div>
                         <span id="slider7Value">0</span> 
-                    </div>    
-                    <button type="submit" name="save" class="btn btn-success" style="margin-bottom: 10px; float: inline-end;">Predict Results</button>
+                    </div>
+                    <div class="row d-flex align-items-center" style="margin-left: 10px; ">
+                        <div class="col-1"><label for="slider8" style="margin-right:20px;">thalach</label></div>
+                        <div class="col-9"><input type="range" class="slider" id="slider8" min="90" max="200" oninput="updateValue('slider8')" style="margin-right: 20px;"></div>
+                        <span id="slider8Value">110</span>
+                    </div>
+                    <div  class="row d-flex align-items-center" style="margin-left: 10px; ">    
+                        <div class="col-1"><label for="slider9" style="margin-right:20px;">exang</label> </div>         
+                        <div class="col-9"><select class="form-select" id="slider9" aria-label="Default select example" onchange="updateValue('slider9')" 
+                                style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
+                            <option selected value="0">0</option>
+                            <option value="1">1</option>
+                        </select></div>
+                        <span id="slider9Value">0</span> 
+                    </div>  
+                    <div class="row d-flex align-items-center" style="margin-left: 10px; ">
+                        <div class="col-1"><label for="slider10" style="margin-right:20px;">oldpeak</label></div>
+                        <div class="col-9"><input type="range" class="slider" id="slider10" min="0" max="6" step="0.1" oninput="updateValue('slider10')" style="margin-right: 20px;"></div>
+                        <span id="slider10Value">2</span>
+                    </div>   
+                    <div  class="row d-flex align-items-center" style="margin-left: 10px; ">    
+                        <div class="col-1"><label for="slider11" style="margin-right:20px;">slope</label> </div>         
+                        <div class="col-9"><select class="form-select" id="slider11" aria-label="Default select example" onchange="updateValue('slider11')" 
+                                style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
+                            <option selected value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select></div>
+                        <span id="slider11Value">0</span> 
+                    </div>  
+                    <div  class="row d-flex align-items-center" style="margin-left: 10px; ">    
+                        <div class="col-1"><label for="slider12" style="margin-right:20px;">ca</label> </div>         
+                        <div class="col-9"><select class="form-select" id="slider12" aria-label="Default select example" onchange="updateValue('slider12')" 
+                                style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
+                            <option selected value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select></div>
+                        <span id="slider12Value">0</span> 
+                    </div>  
+                    <div  class="row d-flex align-items-center" style="margin-left: 10px; ">    
+                        <div class="col-1"><label for="slider13" style="margin-right:20px;">thal</label> </div>         
+                        <div class="col-9"><select class="form-select" id="slider13" aria-label="Default select example" onchange="updateValue('slider13')" 
+                                style="margin-right: 20px; width: 80%; border-radius: 10px; background-color:#d2e0e0; " >
+                            <option selected value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select></div>
+                        <span id="slider13Value">0</span> 
+                    </div>  
+                    <div class="col-3"><button id="predict" type="submit" name="save" class="btn btn-success" style="margin-bottom: 10px; float: inline-end;">Predict Results</button> </div>
                 </form>
             </div>
             <div class="col" style="background-color: white; border-radius: 10px; margin-right: 10px; margin-top: 10px;">
-                <div class="col">
+                <div class="col" style="margin-top: 10px;">
                     <h2>Result</h2>
                     <p id="result">Results will be displayed here...</p>
                 </div>
-                <div class="col">
-                    <h2>asasdsa</h2>
-                    <img id="plot" src="" alt="live plot" style="width: 90%;">
+                <div class="col"><canvas id="myChartresult"></canvas></div>
+                <div class="tbl-container bdr" style="margin-top: 10px;">
+                    <table class="table table-striped table-bordered" >
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">positive probability</th>
+                        <th scope="col">negative probability</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td id="probability1">waiting for results</td>
+                        <td id="probability2">waiting for results</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td id="predictiont"colspan="2">waiting for results</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
             </div>
         </div>
@@ -102,66 +180,124 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         var ws;
+        var wsresult;
         var sliders = [];
-        function connectWebSocket() {
+        var x=[];
+        var myChart;
+        var resultchart;
+        var chartst=0;
+        var id;
+        var slider;
+        const reslabels=['probability1','probability2'];
+        var probability=[];
+        const predictButton = document.getElementById("predict");
+       
+        resultbarchart();
+        resultwebsocket();
+        predictButton.addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default form submission behavior
+            resultwebsocket();
+   
+        });
+        function updateValue(sliderId) {
+            slider = document.getElementById(sliderId);
+            var valueSpan = document.getElementById(sliderId + 'Value');
+            valueSpan.innerHTML = slider.value;
+            id=Number(slider.id.split('slider')[1]);
+
+           resultwebsocket();
+           
+            
+        }
+        function resultwebsocket(){
             var loc = window.location;
             var wsStart = (loc.protocol === "https:") ? "wss://" : "ws://";
-            var endpoint = wsStart + loc.host + "/ws/plot_update/";
-
-            ws = new WebSocket(endpoint);
-            console.log(ws);
-            ws.onopen = function() {
+            var endpoint = wsStart + loc.host + "/ws/plot_resulthd/";
+            wsresult = new WebSocket(endpoint);
+            sliders.length=0;
+            wsresult.onopen = function() {
                 console.log('WebSocket connection opened.');
-                updateChart(); // Initial chart update
-            };
-
-            ws.onmessage = function(event) {
-                var data = JSON.parse(event.data);
-                var plot = document.getElementById('plot');
-                if (plot) {
-                    plot.src = 'data:image/png;base64,' + data.plot;
+                sliders.length=0;
+                for (var i = 1; i <= 13; i++) {
+                sliders.push(Number(document.getElementById('slider' + i).value));
+                
+                }
+                if (wsresult.readyState === WebSocket.OPEN) {
+                    wsresult.send(JSON.stringify({
+                        'x': ['Age', 'sex', 'cp', 'trestbps','chol','fbs','restecg','thalach','exang','oldpeak','slope','ca','thal'],
+                        'y': sliders
+                    }));       
                 } else {
-                    console.log("Element 'plot' not found");
+                    console.log("WebSocket is not open: ", wsresult.readyState);  
+                }
+                
+            };
+            wsresult.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                const colfTextElement = document.getElementById('probability1');
+                const collTextElement = document.getElementById('probability2');
+                const colpredTextElement = document.getElementById('predictiont');
+                if (colfTextElement) {
+                   // labelTextElement.style.display = 'block'; // Adjust as need
+                    requestAnimationFrame(() => {
+                    colfTextElement.innerHTML=data.label_text_negative.toFixed(4)*100+"%" || "No label received";
+                    collTextElement.innerHTML=data.label_text_positive.toFixed(4)*100+"%" || "No label received";
+                    colpredTextElement.innerHTML=data.prediction_text  || "No label received";
+                    probability[0]=Number(data.label_text_negative);
+                    probability[1]=Number(data.label_text_positive).toFixed(2);
+                    resultbarchart();
+                    });
+                } else {
+                    console.error("Element with ID 'result' not found");
                 }
             };
 
-            ws.onclose = function() {
+            wsresult.onclose = function() {
                 console.log('WebSocket connection closed. Reconnecting...');
-                setTimeout(connectWebSocket, 1000); // Reconnect after 1 second
+                setTimeout(connectWebSocket, 1000);
             };
 
-            ws.onerror = function(error) {
+            wsresult.onerror = function(error) {
                 console.log('WebSocket error: ' + error.message);
-                ws.close();
+                wsresult.close();
             };
         }
+      
+    
+        function resultbarchart(){
+            if(chartst==0){
+                const ctx = document.getElementById('myChartresult').getContext('2d');
+                resultchart = new Chart(ctx, {
+                type: 'bar', // Choose your chart type (bar, line, pie, etc.)
+                data: {
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [{x:"negative",y:50},{x:"positive",y:50}],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintaiinAspectRatio:false, 
+                    aspectRatio:false
+                    
+                }
+             });
 
-        connectWebSocket();
-        function updateValue(sliderId) {
-            var slider = document.getElementById(sliderId);
-            var valueSpan = document.getElementById(sliderId + 'Value');
-            valueSpan.innerHTML = slider.value;
-            updateChart();
-        }
-        function updateChart() {
-            sliders.length=0;
-            for (var i = 1; i <= 7; i++) {
-                sliders.push(Number(document.getElementById('slider' + i).value));
             }
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.send(JSON.stringify({
-                    'x': [1, 2, 3, 4, 5, 6, 7],
-                    'y': sliders
-                }));
-            } else {
-                console.log("WebSocket is not open: ", ws.readyState);  
+            else{
+                resultchart.data.datasets[0].data[0].y=probability[0];
+                resultchart.data.datasets[0].data[1].y=probability[1];
+                resultchart.update();
+
             }
+            chartst=1;
+
+           
         }
-       
-        
-        // Function to update slider values
-        
-        
+        //resultwebsocket();
     </script>
 </body>
 </html>

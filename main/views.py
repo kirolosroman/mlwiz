@@ -17,7 +17,7 @@ def tests(response):
     return render(response,"main/tests.html",{})
 
 def cv(response):
-    return render(response,"main/cv.html")
+    return render(response,"main/cv.html",{})
 
 async def plots(request):
     return HttpResponse(request, content_type='image/png')

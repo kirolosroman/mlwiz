@@ -1,87 +1,256 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Live Plot Update</title>
-</head>
-<body>
-    <h1>Live Plot Update</h1>
-    <img id="plot" src="" alt="Live Plot" />
+<scrifunction connectWebSocket() {
+    var loc = window.location;
+    var wsStart = (loc.protocol === "https:") ? "wss://" : "ws://";
+    var endpoint = wsStart + loc.host + "/ws/plot_update/";
+    ws = new WebSocket(endpoint);
+    console.log(ws);
 
-    <script>
-        var ws = new WebSocket('ws://' + window.location.host + '/ws/plot_update/');
-        ws.onopen = function() {
+    ws.onopen = function() {
         console.log('WebSocket connection opened.');
-        };
+        //labelfunc();
+        updateChart();
+    };
 
-        ws.onmessage = function(event) {
-            var data = JSON.parse(event.data);
-            var plot = document.getElementById('plot');
+    ws.onmessage = function(event) {
+        var data = JSON.parse(event.data);
+        var plot = document.getElementById('plot');
+        if (plot) {
             plot.src = 'data:image/png;base64,' + data.plot;
-        };
+        } else {
+            console.log("Element 'plot' not found");
+        }
+    };
 
-        ws.onclose = function() {
+    ws.onclose = function() {
         console.log('WebSocket connection closed. Reconnecting...');
-        setTimeout(connectWebSocket, 1000); // Reconnect after 1 second
-        };
+        setTimeout(connectWebSocket, 1000);
+    };
 
-        // Simulate sending new data for the plot
-        setInterval(function() {
-            ws.send(JSON.stringify({
-                'x': [1, 2, 3, 4, 5],
-                'y': [5, 4, 3, 2, 1]
-            }));
-        }, 5000); // Update every 5 seconds
-        ws.onerror = function(error) {
-       console.error('WebSocket Error:', error);
-       ws.close();
-        };
-       // Handle the error, e.g., display a message to the user
-       // You might want to attempt to reconnect here, but be careful to avoid infinite loops.
-    </script>
-</body>
-</html>
+    ws.onerror = function(error) {
+        console.log('WebSocket error: ' + error.message);
+        ws.close();
+    };
+    
+}
 
+connectWebSocket();
+function updateValue(sliderId) {
+    var slider = document.getElementById(sliderId);
+    var valueSpan = document.getElementById(sliderId + 'Value');
+    valueSpan.innerHTML = slider.value;
+    updateChart();
+}
+function labelfunc(){
+    document.querySelectorAll('div.row.d-flex.align-items-center label').forEach(label => {
+        let labelText = label.innerHTML.trim();  // Remove leading/trailing whitespace
+        if (labelText) {  // Only add non-empty strings
+            x.push(labelText);
+        }
+    });
+    x.length=0;
+    x=['Age', 'sex', 'cp', 'trestbps','chol','fbs','restecg','thalach'];
+}
+function updateChart() {
+    sliders.length=0;
+    for (var i = 1; i <= 13; i++) {
+        sliders.push(Number(document.getElementById('slider' + i).value));
+        //x.push(label ? label.textContent : '');
+        //x.push(document.getElementById('slider' + i).textContent);
+        
+    }
+    if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+            'x': ['Age', 'sex', 'cp', 'trestbps','chol','fbs','restecg','thalach','exang','oldpeak','slope','ca','thal'],
+            'y': sliders
+        }));
+    } else {
+        console.log("WebSocket is not open: ", ws.readyState);  
+    }
+}
+///////////////////////////////////
+function initiate(){
+    if(upc==0){
+        sliders.length=0;
+        for (var i = 1; i <= 13; i++) {
+            sliders.push(Number(document.getElementById('slider' + i).value));
+        }
 
+        xm=sliders.map((y, index) => ({x: labels[index], y: y}));
+        const ctx = document.getElementById('myChart').getContext('2d');
 
-
-var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
+        myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange','black'],
                 datasets: [{
-                    label: '# of Votes',
-                    data: sliders,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
+                    label: 'live plot',
+                    data: xm,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1  
                 }]
             },
             options: {
-                scales: {
-                    y: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                x: {
+                    type: 'category',
+                    position:'bottom'
+                   
+                },
+                y: {
+                    type:'linear',
+                    position:'left' 
+                
                 }
             }
-        });
+            }
+        )
+    }
+    else{
+        myChart.data.datasets[0].data[id-1].y=Number(slider.value);
+        myChart.update();
+    }
+     upc=1;   
         
+        
+        
+   }
+
+</script>
+<div class="col">
+    <img id="plot" src="" alt="live plot" style="width: 90%;"> 
+</div>
+
+
+
+
+
+<div class="sidebar" id="sidebar">  
+    <div class="sidebar-header">  
+        <h2>Menu</h2>  
+    </div>  
+    <div class="sidebar-menu" id="menu">  
+        <div>  
+            <li><button class="button-toggle" onclick="location.href='#';">Home</button></li>  
+        </div>  
+        <div class="dropdown">  
+            <ul><button class="toggleBtn" onclick="location.href='#';">Supervised Models</button></ul>
+            <ul><button class="toggleBtn" onclick="location.href='#';"></button> Regression Models  </ul> 
+            <div class="dropdown-content"> 
+                <li><a href="/classification/heartdisease">Heart Disease Prediction</a></li>
+                <li><a href="/tests">testing</a></li>  
+                <li><a href="/plots">sss</a></li> 
+            </div>  
+            <ul class="dropdown-submenu" href="#">Classification Models</ul>  
+            <ul class="dropdown">  
+                <li><a href="/classification/heartdisease">Heart Disease Prediction</a></li>
+                <li><a href="/tests">testing</a></li>  
+                <li><a href="/plots">plot</a></li>  
+            
+            </ul>
+        </div>  
+        <li>  
+            <a href="#about">About</a>  
+        </li> 
+        <li>  
+            <a href="#team">Team</a>  
+        </li>
+        <li>
+            <a class="dropdown-toggle" href="#">Services</a>  
+            <ul class="dropdown">  
+                <li><a href="#">Web Development</a></li>  
+                <li><a href="#google.com">App Development</a></li>  
+                <li><a href="#">SEO Services</a></li>  
+            </ul>  
+        </li>
+            
+        <li>  
+            <a href="#contact">Contact</a>  
+        </li>  
+    </div>  
+</div>  
+
+<style>
+    * {  
+    box-sizing: border-box;  
+}  
+
+body {  
+    margin: 0;  
+    font-family: Arial, sans-serif;  
+}  
+.dropdown-content{
+    display: none;
+    position: absolute;
+    background-color: red;
+    width: 90%;
+    box-shadow: 0px 8px 16px 0px;
+    z-index: 1;
+}
+.dropdown-content li{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+
+.toggle-btn {  
+    margin: 10px;  
+    padding: 10px 20px;  
+    font-size: 16px;  
+    background: #0b7e7e;
+    border: none;
+    border-radius: 10%;
+}  
+
+.sidebar {  
+    height: 100%;  
+    width: 250px;  
+    background:#2c3e50;  
+    position: fixed;  
+    left: -250px; /* Start hidden */  
+    transition: left 0.3s ease;  
+    border-radius: 10px;
+    z-index: 1000;
+}  
+
+.sidebar-header {  
+    padding: 15px;  
+    background: #2c3e50;  
+    color: white;  
+    text-align: center;  
+}  
+
+.sidebar-menu {  
+    list-style-type: none;  
+    padding: 0;  
+    margin: 0;  
+}  
+
+.sidebar-menu li {  
+    position: relative;  
+}  
+.dropdown-submenu{
+    background: #2c3e50;
+    color: white;
+}
+.sidebar-menu a {  
+    display: block;  
+    padding: 15px;  
+    color: white;  
+    text-decoration: none;  
+    transition: background 0.3s;  
+}  
+
+.sidebar-menu a:hover {  
+    background: #555;  
+}  
+
+
+@keyframes fadeIn {  
+    from { opacity: 0; }  
+    to { opacity: 1; }  
+}
+
+</style>

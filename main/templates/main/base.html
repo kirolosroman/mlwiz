@@ -22,13 +22,15 @@
             font-family: Arial, sans-serif;  
         }  
 
-        .toggle-btn {  
+        .navbar-toggler-icon {  
             margin: 10px;  
             padding: 10px 20px;  
             font-size: 16px;  
             background: #0b7e7e;
             border: none;
             border-radius: 10%;
+            font-size:32px ;
+            border-color: black;
         }  
         
         .sidebar {  
@@ -38,8 +40,7 @@
             position: fixed;  
             left: -250px; /* Start hidden */  
             transition: left 0.3s ease;  
-            border-radius: 10px;
-            z-index: 1000;
+            z-index: 1;
         }  
 
         .sidebar-header {  
@@ -86,15 +87,12 @@
             padding: 10px;  
         }  
 
-        .dropdown-toggle:hover + .dropdown,  
         .dropdown-toggle:focus + .dropdown,  
         .dropdown:focus-within {  
             display: block;  
             animation: fadeIn 0.3s;  
         }  
-        li:hover > .dropdown {  
-            display: block; /* Ensure dropdown stays open on hovering over the parent <li> */  
-        }  
+      
         
         @keyframes fadeIn {  
             from { opacity: 0; }  
@@ -105,7 +103,7 @@
 <body style="background-color:#d2e0e0;">
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2c3e50;">
         <div class="container-fluid">
-            <button id="toggleBtn" class="toggle-btn">Menu</button>  
+            <button id="toggleBtn" class="navbar-toggler-icon" type="button"></button>  
           <a class="navbar-brand mb-0 h1" href="#">Kalgenta</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -127,25 +125,25 @@
         <div class="sidebar-header">  
             <h2>Menu</h2>  
         </div>  
-        <div class="sidebar-menu">  
+        <div class="sidebar-menu" id="menu">  
             <li>  
                 <a href="#">Home</a>  
             </li>  
             <li>  
-                <a class="dropdown-toggle" href="#">Supervised Models</a>  
-                <ul class="dropdown-submenu" href="#">Regression Models</ul>  
+                <a class="dropdown-toggle"  href="#">Supervised Models</a>
                 <ul class="dropdown">  
-                    <li><a href="#">re</a></li>
-                    <li><a href="#">SEO</a></li>  
-                    <li><a href="#">Marketing</a></li>  
-                
-                </ul>
-                <ul class="dropdown-submenu" href="#">Classification Models</ul>  
-                <ul class="dropdown">  
-                    <li><a href="/classification/heartdisease">Heart Disease Prediction</a></li>
-                    <li><a href="/tests">testing</a></li>  
-                    <li><a href="/plots">plot</a></li>  
-                
+                    <a class="dropdown-toggle" href="#">Regression Models</a> 
+                    <ul class="dropdown">
+                        <li><a href="#">re</a></li>
+                        <li><a href="#">SEO</a></li>  
+                        <li><a href="#">Marketing</a></li>
+                    </ul> 
+                    <a class="dropdown-toggle" href="#">Classification Models </a>
+                    <ul class="dropdown">
+                        <li><a href="/classification/heartdisease">Heart Disease Prediction</a></li>
+                        <li><a href="/tests">testing</a></li>  
+                        <li><a href="/plots">plot</a></li> 
+                    </ul>
                 </ul>
             </li>  
             <li>  
@@ -169,6 +167,15 @@
         </div>  
     </div>  
     <!--Navigation Bar Top-->
+    <div id="content", name="content" class="main" style="margin-right: 20px;">
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <hr class="mt-0 mb-4">
+                {% block content%}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
     
 </body> 
         
@@ -176,26 +183,35 @@
     
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>  
-        <script>document.getElementById('toggleBtn').addEventListener('click', function() {  
+        <script>
+            
+            var dropdown_submenu = document.getElementsByClassName("dropdown-toggle");
+            var i;
+
+            for (i = 0; i < dropdown_submenu.length; i++) {
+                dropdown_submenu[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+                } else {
+                dropdownContent.style.display = "block";
+                }
+            });
+            }
+            
+            
+        document.getElementById('toggleBtn').addEventListener('click', function() {  
             var sidebar = document.getElementById('sidebar');  
             if (sidebar.style.left === '0px') {  
                 sidebar.style.left = '-250px'; // Hide the sidebar  
             } else {  
                 sidebar.style.left = '0px';  // Show the sidebar  
-            }  
-        });</script>
+            } 
+        }); 
+        
+        </script>
        
-        <div id="content", name="content" class="main" style="margin-right: 20px;">
-            <div class="row justify-content-center">
-                <div class="col-10">
-                    <hr class="mt-0 mb-4">
-                    {% block content%}
-                    {% endblock %}
-                </div>
-            </div>
-        </div>
-    </body>
-    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
    
